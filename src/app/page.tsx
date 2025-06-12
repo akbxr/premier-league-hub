@@ -25,11 +25,11 @@ import {
 } from "lucide-react";
 import { Team, Event, League } from "@/types";
 import {
-  getNBATeams,
-  getNBAPreviousMatches,
+  getPLTeams,
+  getPLPreviousMatches,
   getPreviousSeasonMatches,
-  getNBANextMatches,
-  getNBALeague,
+  getPLNextMatches,
+  getPremierLeague,
 } from "@/lib/api";
 import { getFavoriteTeams } from "@/lib/favorites";
 import TeamCard from "@/components/team-card";
@@ -59,11 +59,11 @@ export default function HomePage() {
           upcomingMatchesData,
           leagueData,
         ] = await Promise.all([
-          getNBATeams(),
-          getNBAPreviousMatches(),
+          getPLTeams(),
+          getPLPreviousMatches(),
           getPreviousSeasonMatches(),
-          getNBANextMatches(),
-          getNBALeague(),
+          getPLNextMatches(),
+          getPremierLeague(),
         ]);
 
         setTeams(teamsData.slice(0, 8)); // Show only first 8 teams on home page
