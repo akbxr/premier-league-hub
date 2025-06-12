@@ -75,7 +75,7 @@ const TeamCard: React.FC<TeamCardProps> = ({
 
   if (variant === "compact") {
     return (
-      <Link href={`/teams/${team.idTeam}`}>
+      <Link href={`/teams/${encodeURIComponent(team.strTeam)}`}>
         <Card
           className={`bg-slate-800/60 backdrop-blur-xl border border-slate-600/50 hover:border-cyan-500/50 transition-all duration-500 hover:shadow-lg hover:shadow-cyan-500/20 group cursor-pointer ${className}`}
         >
@@ -237,7 +237,10 @@ const TeamCard: React.FC<TeamCardProps> = ({
         </CardContent>
 
         <CardFooter className="p-4 sm:p-6">
-          <Link href={`/teams/${team.idTeam}`} className="w-full">
+          <Link
+            href={`/teams/${encodeURIComponent(team.strTeam)}`}
+            className="w-full"
+          >
             <Button className="w-full text-sm bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 text-white border-0 shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 transition-all duration-300">
               <Sparkles className="mr-2 h-4 w-4" />
               View Details
@@ -250,7 +253,7 @@ const TeamCard: React.FC<TeamCardProps> = ({
 
   // Default variant
   return (
-    <Link href={`/teams/${team.idTeam}`}>
+    <Link href={`/teams/${encodeURIComponent(team.strTeam)}`}>
       <Card
         className={`bg-slate-800/60 backdrop-blur-xl border border-slate-600/50 hover:border-blue-500/50 transition-all duration-500 hover:shadow-lg hover:shadow-blue-500/20 cursor-pointer group hover:scale-105 ${className}`}
       >

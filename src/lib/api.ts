@@ -63,6 +63,19 @@ export async function getTeamDetails(teamId: string): Promise<Team | null> {
   }
 }
 
+export async function getTeamDetailsByName(
+  teamName: string,
+): Promise<Team | null> {
+  try {
+    const response = await fetch(`${BASE_URL}/searchteams.php?t=${teamName}`);
+    const data: ApiResponse<Team> = await response.json();
+    return data.teams?.[0] || null;
+  } catch (error) {
+    console.error("Error fetching team details:", error);
+    return null;
+  }
+}
+
 // Fetch previous matches for Premier league
 export async function getPLPreviousMatches(): Promise<Event[]> {
   try {

@@ -644,7 +644,10 @@ export default function MatchDetailPage() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-2 sm:space-y-3">
-                <Link href={`/teams/${match.idHomeTeam}`} className="w-full">
+                <Link
+                  href={`/teams/${encodeURIComponent(match.strHomeTeam)}`}
+                  className="w-full"
+                >
                   <Button
                     variant="outline"
                     className="w-full justify-start gap-2 text-xs sm:text-sm h-9 sm:h-10"
@@ -654,7 +657,10 @@ export default function MatchDetailPage() {
                   </Button>
                 </Link>
 
-                <Link href={`/teams/${match.idAwayTeam}`} className="w-full">
+                <Link
+                  href={`/teams/${encodeURIComponent(match.strAwayTeam)}`}
+                  className="w-full"
+                >
                   <Button
                     variant="outline"
                     className="w-full justify-start gap-2 text-xs sm:text-sm h-9 sm:h-10"

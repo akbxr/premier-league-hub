@@ -27,7 +27,7 @@ import {
 } from "lucide-react";
 import { Team, Event } from "@/types";
 import {
-  getTeamDetails,
+  getTeamDetailsByName,
   getTeamPreviousMatches,
   getTeamNextMatches,
 } from "@/lib/api";
@@ -37,7 +37,7 @@ import MatchCard from "@/components/match-card";
 
 export default function TeamDetailPage() {
   const params = useParams();
-  const teamId = params.id as string;
+  const teamName = decodeURIComponent(params.teamName as string);
 
   const [team, setTeam] = useState<Team | null>(null);
   const [previousMatches, setPreviousMatches] = useState<Event[]>([]);
@@ -49,20 +49,24 @@ export default function TeamDetailPage() {
 
   useEffect(() => {
     const loadTeamData = async () => {
-      if (!teamId) return;
+      if (!teamName) return;
 
       try {
         setIsLoading(true);
 
-        // Load team details and matches in parallel
-        const [teamData, prevMatches, nextMatchesData] = await Promise.all([
-          getTeamDetails(teamId),
-          getTeamPreviousMatches(teamId),
-          getTeamNextMatches(teamId),
-        ]);
+        // Get team details first to get the team ID for matches
+        const teamData = await getTeamDetailsByName(teamName);
 
-        console.log("prevMatches", prevMatches);
-        console.log("nextMatchesData", nextMatchesData);
+        if (!teamData) {
+          setIsLoading(false);
+          return;
+        }
+
+        // Load matches using team ID
+        const [prevMatches, nextMatchesData] = await Promise.all([
+          getTeamPreviousMatches(teamData.idTeam),
+          getTeamNextMatches(teamData.idTeam),
+        ]);
 
         setTeam(teamData);
         setPreviousMatches(prevMatches.slice(0, 10)); // Show last 10 matches
@@ -76,9 +80,17 @@ export default function TeamDetailPage() {
     };
 
     loadTeamData();
-  }, [teamId]);
+  }, [teamName]);
 
   const isFavorite = team ? isTeamFavorite(team.idTeam) : false;
+
+  const formatUrl = (url: string | undefined) => {
+    if (!url) return "";
+    if (url.startsWith("http://") || url.startsWith("https://")) {
+      return url;
+    }
+    return `https://${url}`;
+  };
 
   const handleFavoriteToggle = async () => {
     if (!team) return;
@@ -110,35 +122,35 @@ export default function TeamDetailPage() {
   const socialLinks = [
     {
       name: "Website",
-      url: team?.strWebsite,
+      url: formatUrl(team?.strWebsite),
       icon: Globe,
       color: "text-blue-600",
     },
     {
       name: "Facebook",
-      url: team?.strFacebook,
+      url: formatUrl(team?.strFacebook),
       icon: Facebook,
       color: "text-blue-500",
     },
     {
       name: "Twitter",
-      url: team?.strTwitter,
+      url: formatUrl(team?.strTwitter),
       icon: Twitter,
       color: "text-sky-500",
     },
     {
       name: "Instagram",
-      url: team?.strInstagram,
+      url: formatUrl(team?.strInstagram),
       icon: Instagram,
       color: "text-pink-500",
     },
     {
       name: "YouTube",
-      url: team?.strYoutube,
+      url: formatUrl(team?.strYoutube),
       icon: Youtube,
       color: "text-red-500",
     },
-  ].filter((link) => link.url);
+  ].filter((link) => link.url && link.url !== "https://");
 
   if (isLoading) {
     return (
@@ -458,7 +470,9 @@ export default function TeamDetailPage() {
                     className="w-full text-xs sm:text-sm"
                     asChild
                   >
-                    <Link href={`/teams/${teamId}/matches`}>
+                    <Link
+                      href={`/teams/${encodeURIComponent(teamName)}/matches`}
+                    >
                       View All Matches
                     </Link>
                   </Button>
@@ -499,7 +513,9 @@ export default function TeamDetailPage() {
                     className="w-full text-xs sm:text-sm"
                     asChild
                   >
-                    <Link href={`/teams/${teamId}/fixtures`}>
+                    <Link
+                      href={`/teams/${encodeURIComponent(teamName)}/fixtures`}
+                    >
                       View All Fixtures
                     </Link>
                   </Button>

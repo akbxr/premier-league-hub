@@ -360,7 +360,7 @@ export default function StandingsPage() {
                       </Avatar>
                       <div className="min-w-0 flex-1">
                         <Link
-                          href={`/teams/${team.idTeam}`}
+                          href={`/teams/${encodeURIComponent(team.strTeam)}`}
                           className="hover:text-primary transition-colors"
                         >
                           <div className="font-medium text-sm truncate">
@@ -429,7 +429,7 @@ export default function StandingsPage() {
                       </TableCell>
                       <TableCell>
                         <Link
-                          href={`/teams/${team.idTeam}`}
+                          href={`/teams/${encodeURIComponent(team.strTeam)}`}
                           className="flex items-center space-x-3 hover:text-primary transition-colors"
                         >
                           <Avatar className="h-8 w-8">
@@ -500,7 +500,7 @@ export default function StandingsPage() {
                       </AvatarFallback>
                     </Avatar>
                     <Link
-                      href={`/teams/${team.idTeam}`}
+                      href={`/teams/${encodeURIComponent(team.strTeam)}`}
                       className="hover:text-primary transition-colors min-w-0 flex-1"
                     >
                       <span className="font-medium text-xs sm:text-sm truncate block">
@@ -549,7 +549,7 @@ export default function StandingsPage() {
                       </AvatarFallback>
                     </Avatar>
                     <Link
-                      href={`/teams/${team.idTeam}`}
+                      href={`/teams/${encodeURIComponent(team.strTeam)}`}
                       className="hover:text-primary transition-colors min-w-0 flex-1"
                     >
                       <span className="font-medium text-xs sm:text-sm truncate block">
