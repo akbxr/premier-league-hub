@@ -365,11 +365,6 @@ export default function MatchDetailPage() {
                     <div className="text-xl sm:text-2xl font-bold text-muted-foreground">
                       VS
                     </div>
-                    {match.strTime && (
-                      <div className="text-xs sm:text-sm text-muted-foreground">
-                        {format(new Date(match.dateEvent), "MMM dd, HH:mm")}
-                      </div>
-                    )}
                   </div>
                 )}
               </div>

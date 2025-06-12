@@ -1,6 +1,14 @@
 import { FavoriteTeam, Team } from "@/types";
 
 const FAVORITES_KEY = "premier_league_favorite_teams";
+const FAVORITES_CHANGED_EVENT = "favoritesChanged";
+
+// Dispatch custom event when favorites change
+const dispatchFavoritesChanged = () => {
+  if (typeof window !== "undefined") {
+    window.dispatchEvent(new CustomEvent(FAVORITES_CHANGED_EVENT));
+  }
+};
 
 // Get all favorite teams from localStorage
 export function getFavoriteTeams(): FavoriteTeam[] {
@@ -36,6 +44,7 @@ export function addToFavorites(team: Team): boolean {
 
     const updatedFavorites = [...favorites, favoriteTeam];
     localStorage.setItem(FAVORITES_KEY, JSON.stringify(updatedFavorites));
+    dispatchFavoritesChanged();
 
     return true;
   } catch (error) {
@@ -53,6 +62,7 @@ export function removeFromFavorites(teamId: string): boolean {
     const updatedFavorites = favorites.filter((fav) => fav.idTeam !== teamId);
 
     localStorage.setItem(FAVORITES_KEY, JSON.stringify(updatedFavorites));
+    dispatchFavoritesChanged();
     return true;
   } catch (error) {
     console.error("Error removing team from favorites:", error);
@@ -74,6 +84,7 @@ export function clearFavorites(): boolean {
 
   try {
     localStorage.removeItem(FAVORITES_KEY);
+    dispatchFavoritesChanged();
     return true;
   } catch (error) {
     console.error("Error clearing favorites:", error);

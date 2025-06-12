@@ -280,17 +280,15 @@ export default function SchedulePage() {
           </Card>
 
           <Card>
-            <CardContent className="p-3 sm:p-4">
-              <div className="flex items-center space-x-2 sm:space-x-3">
-                <div className="p-2 rounded-lg bg-blue-100 text-blue-600 flex-shrink-0">
-                  <Clock className="h-4 w-4 sm:h-5 sm:w-5" />
+            <CardContent className="p-4">
+              <div className="flex items-center space-x-3">
+                <div className="p-2 rounded-lg bg-purple-100 text-purple-600">
+                  <Trophy className="h-5 w-5" />
                 </div>
-                <div className="min-w-0">
-                  <div className="text-lg sm:text-xl lg:text-2xl font-bold">
-                    {filteredPrevious.length}
-                  </div>
-                  <div className="text-xs sm:text-sm text-muted-foreground">
-                    Recent Matches
+                <div>
+                  <div className="text-2xl font-bold">{allTeams.length}</div>
+                  <div className="text-sm text-muted-foreground">
+                    Teams Playing
                   </div>
                 </div>
               </div>

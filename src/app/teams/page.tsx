@@ -25,18 +25,19 @@ import {
 } from "lucide-react";
 import { Team } from "@/types";
 import { getPLTeams } from "@/lib/api";
-import { getFavoriteTeams } from "@/lib/favorites";
+import { useFavorites } from "@/hooks/use-favorites";
 import TeamCard from "@/components/team-card";
 
 export default function TeamsPage() {
   const [teams, setTeams] = useState<Team[]>([]);
   const [filteredTeams, setFilteredTeams] = useState<Team[]>([]);
-  const [favoriteTeams, setFavoriteTeams] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState("name");
   const [filterBy, setFilterBy] = useState("all");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+
+  const { favoriteTeams, isFavorite } = useFavorites();
 
   useEffect(() => {
     const loadTeams = async () => {
@@ -45,10 +46,6 @@ export default function TeamsPage() {
         const teamsData = await getPLTeams();
         setTeams(teamsData);
         setFilteredTeams(teamsData);
-
-        // Load favorite teams
-        const favorites = getFavoriteTeams();
-        setFavoriteTeams(favorites);
       } catch (error) {
         console.error("Error loading teams:", error);
       } finally {
@@ -119,7 +116,7 @@ export default function TeamsPage() {
         </Card>
 
         {/* Teams Grid Skeleton */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6">
           {Array.from({ length: 12 }).map((_, i) => (
             <Card key={i}>
               <CardHeader className="pb-3">
@@ -257,7 +254,7 @@ export default function TeamsPage() {
         <div
           className={
             viewMode === "grid"
-              ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 lg:gap-6"
+              ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-3 sm:gap-4 lg:gap-6"
               : "space-y-2 sm:space-y-4"
           }
         >

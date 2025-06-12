@@ -31,40 +31,41 @@ import {
 } from "lucide-react";
 import { FavoriteTeam, Team } from "@/types";
 import { getPLTeams } from "@/lib/api";
-import {
-  getFavoriteTeams,
-  removeFromFavorites,
-  clearFavorites,
-  addToFavorites,
-} from "@/lib/favorites";
+import { clearFavorites } from "@/lib/favorites";
+import { useFavorites } from "@/hooks/use-favorites";
 import TeamCard from "@/components/team-card";
 import { toast } from "sonner";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export default function FavoritesPage() {
-  const [favoriteTeams, setFavoriteTeams] = useState<FavoriteTeam[]>([]);
+  const {
+    favoriteTeams,
+    addToFavorites,
+    removeFromFavorites,
+    refreshFavorites,
+  } = useFavorites();
   const [allTeams, setAllTeams] = useState<Team[]>([]);
   const [filteredTeams, setFilteredTeams] = useState<Team[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [showAddDialog, setShowAddDialog] = useState(false);
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 
   useEffect(() => {
     const loadData = async () => {
       try {
         setIsLoading(true);
 
-        // Load favorite teams from localStorage
-        const favorites = getFavoriteTeams();
-        setFavoriteTeams(favorites);
+        // Refresh favorites to ensure latest data
+        refreshFavorites();
 
         // Load all teams for adding new favorites
         const teamsData = await getPLTeams();
         setAllTeams(teamsData);
 
         // Filter out teams that are already in favorites
-        const favoriteIds = favorites.map((fav) => fav.idTeam);
+        const favoriteIds = favoriteTeams.map((fav) => fav.idTeam);
         const availableTeams = teamsData.filter(
           (team) => !favoriteIds.includes(team.idTeam),
         );
@@ -105,11 +106,10 @@ export default function FavoritesPage() {
   const handleRemoveFromFavorites = (teamId: string, teamName: string) => {
     const success = removeFromFavorites(teamId);
     if (success) {
-      setFavoriteTeams(getFavoriteTeams());
       toast.success(`${teamName} removed from favorites`);
 
       // Update filtered teams to include the removed team
-      const favoriteIds = getFavoriteTeams().map((fav) => fav.idTeam);
+      const favoriteIds = favoriteTeams.map((fav) => fav.idTeam);
       const availableTeams = allTeams.filter(
         (team) => !favoriteIds.includes(team.idTeam),
       );
@@ -122,7 +122,7 @@ export default function FavoritesPage() {
   const handleClearAllFavorites = () => {
     const success = clearFavorites();
     if (success) {
-      setFavoriteTeams([]);
+      refreshFavorites();
       setFilteredTeams(allTeams);
       toast.success("All favorites cleared");
     } else {
@@ -133,11 +133,10 @@ export default function FavoritesPage() {
   const handleAddToFavorites = (team: Team) => {
     const success = addToFavorites(team);
     if (success) {
-      setFavoriteTeams(getFavoriteTeams());
       toast.success(`${team.strTeam} added to favorites`);
 
       // Update filtered teams to remove the added team
-      const favoriteIds = getFavoriteTeams().map((fav) => fav.idTeam);
+      const favoriteIds = favoriteTeams.map((fav) => fav.idTeam);
       const availableTeams = allTeams.filter(
         (team) => !favoriteIds.includes(team.idTeam),
       );
