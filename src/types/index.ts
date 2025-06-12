@@ -224,6 +224,51 @@ export interface ApiResponse<T> {
   event?: T[];
   results?: T[];
   eventstats?: T[];
+  player?: T[];
+}
+
+export interface Player {
+  idPlayer: string;
+  strPlayer: string;
+  strPlayerAlternate?: string;
+  strNationality?: string;
+  strPosition?: string;
+  strNumber?: string;
+  strTeam?: string;
+  idTeam?: string;
+  strHeight?: string;
+  strWeight?: string;
+  strDescriptionEN?: string;
+  strGender?: string;
+  strSide?: string;
+  strPosition2?: string;
+  strCollege?: string;
+  strFacebook?: string;
+  strWebsite?: string;
+  strTwitter?: string;
+  strInstagram?: string;
+  strYoutube?: string;
+  strCreativeCommons?: string;
+  strLocked?: string;
+  dateBorn?: string;
+  strBirthLocation?: string;
+  strThumb?: string;
+  strCutout?: string;
+  strRender?: string;
+  strBanner?: string;
+  strFanart1?: string;
+  strFanart2?: string;
+  strFanart3?: string;
+  strFanart4?: string;
+  intLoved?: string;
+  strContract?: string;
+  strAgent?: string;
+  strSigning?: string;
+  strWage?: string;
+  strOutfitter?: string;
+  strKit?: string;
+  strJersey?: string;
+  strSport: string;
 }
 
 export interface FavoriteTeam {

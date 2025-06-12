@@ -5,6 +5,7 @@ import {
   TeamStanding,
   EventDetails,
   EventStatistic,
+  Player,
   ApiResponse,
   PREMIER_LEAGUE_ID,
 } from "@/types";
@@ -210,5 +211,19 @@ export async function getPremierLeague(): Promise<League | null> {
   } catch (error) {
     console.error("Error fetching Premier league:", error);
     return null;
+  }
+}
+
+// Fetch team players
+export async function getTeamPlayers(teamId: string): Promise<Player[]> {
+  try {
+    const response = await fetch(
+      `${BASE_URL}/lookup_all_players.php?id=${teamId}`,
+    );
+    const data: ApiResponse<Player> = await response.json();
+    return data.player || [];
+  } catch (error) {
+    console.error("Error fetching team players:", error);
+    return [];
   }
 }

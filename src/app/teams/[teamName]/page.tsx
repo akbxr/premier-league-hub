@@ -24,16 +24,19 @@ import {
   Twitter,
   Instagram,
   Youtube,
+  Shirt,
 } from "lucide-react";
-import { Team, Event } from "@/types";
+import { Team, Event, Player } from "@/types";
 import {
   getTeamDetailsByName,
   getTeamPreviousMatches,
   getTeamNextMatches,
+  getTeamPlayers,
 } from "@/lib/api";
 import { useFavorites } from "@/hooks/use-favorites";
 import { toast } from "sonner";
 import MatchCard from "@/components/match-card";
+import PlayerCard from "@/components/player-card";
 
 export default function TeamDetailPage() {
   const params = useParams();
@@ -42,6 +45,7 @@ export default function TeamDetailPage() {
   const [team, setTeam] = useState<Team | null>(null);
   const [previousMatches, setPreviousMatches] = useState<Event[]>([]);
   const [nextMatches, setNextMatches] = useState<Event[]>([]);
+  const [players, setPlayers] = useState<Player[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isTogglingFavorite, setIsTogglingFavorite] = useState(false);
 
@@ -62,15 +66,17 @@ export default function TeamDetailPage() {
           return;
         }
 
-        // Load matches using team ID
-        const [prevMatches, nextMatchesData] = await Promise.all([
+        // Load matches and players using team ID
+        const [prevMatches, nextMatchesData, playersData] = await Promise.all([
           getTeamPreviousMatches(teamData.idTeam),
           getTeamNextMatches(teamData.idTeam),
+          getTeamPlayers(teamData.idTeam),
         ]);
 
         setTeam(teamData);
         setPreviousMatches(prevMatches.slice(0, 10)); // Show last 10 matches
         setNextMatches(nextMatchesData.slice(0, 10)); // Show next 10 matches
+        setPlayers(playersData); // Set all players
       } catch (error) {
         console.error("Error loading team data:", error);
         toast.error("Failed to load team data");
@@ -532,6 +538,27 @@ export default function TeamDetailPage() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Players Section */}
+      {players.length > 0 && (
+        <Card className="bg-slate-800/60 backdrop-blur-xl border border-slate-600/50">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-white">
+              <Shirt className="h-5 w-5 text-orange-400" />
+              Team Squad
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {players.map((player) => (
+              <PlayerCard
+                key={player.idPlayer}
+                player={player}
+                variant="compact"
+              />
+            ))}
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 }
