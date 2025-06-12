@@ -27,6 +27,7 @@ import {
   Users,
   ArrowRight,
   StarOff,
+  X,
 } from "lucide-react";
 import { FavoriteTeam, Team } from "@/types";
 import { getPLTeams } from "@/lib/api";
@@ -148,30 +149,30 @@ export default function FavoritesPage() {
 
   if (isLoading) {
     return (
-      <div className="container mx-auto px-4 py-8 space-y-8">
+      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8 space-y-4 sm:space-y-8">
         {/* Header Skeleton */}
         <div className="space-y-4">
-          <Skeleton className="h-12 w-64" />
-          <Skeleton className="h-6 w-96" />
+          <Skeleton className="h-8 sm:h-12 w-48 sm:w-64" />
+          <Skeleton className="h-4 sm:h-6 w-64 sm:w-96" />
         </div>
 
         {/* Stats Skeleton */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
           {Array.from({ length: 3 }).map((_, i) => (
             <Card key={i}>
-              <CardContent className="p-4">
-                <Skeleton className="h-16 w-full" />
+              <CardContent className="p-3 sm:p-4">
+                <Skeleton className="h-12 sm:h-16 w-full" />
               </CardContent>
             </Card>
           ))}
         </div>
 
         {/* Content Skeleton */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
           {Array.from({ length: 8 }).map((_, i) => (
             <Card key={i}>
-              <CardContent className="p-4">
-                <Skeleton className="h-32 w-full" />
+              <CardContent className="p-3 sm:p-4">
+                <Skeleton className="h-24 sm:h-32 w-full" />
               </CardContent>
             </Card>
           ))}
@@ -181,37 +182,42 @@ export default function FavoritesPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 space-y-8">
+    <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8 space-y-4 sm:space-y-8">
       {/* Header */}
       <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-4xl font-bold flex items-center gap-3">
-              <Star className="h-10 w-10 text-yellow-500" />
-              Favorite Teams
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="min-w-0">
+            <h1 className="text-2xl sm:text-4xl font-bold flex items-center gap-2 sm:gap-3">
+              <Star className="h-6 w-6 sm:h-10 sm:w-10 text-yellow-500 flex-shrink-0" />
+              <span className="leading-tight">Favorite Teams</span>
             </h1>
-            <p className="text-muted-foreground text-lg">
+            <p className="text-sm sm:text-lg text-muted-foreground">
               Manage your favorite Premier League teams.
             </p>
           </div>
-          <div className="flex gap-2">
+          <div className="flex flex-col sm:flex-row gap-2">
             <Button
               onClick={() => setShowAddDialog(true)}
-              className="gap-2"
+              className="gap-2 text-sm sm:text-base h-8 sm:h-10"
               disabled={filteredTeams.length === 0}
             >
               <Plus className="h-4 w-4" />
-              Add Team
+              <span className="hidden sm:inline">Add Team</span>
+              <span className="sm:hidden">Add</span>
             </Button>
             {favoriteTeams.length > 0 && (
               <AlertDialog>
                 <AlertDialogTrigger asChild>
-                  <Button variant="outline" className="gap-2">
+                  <Button
+                    variant="outline"
+                    className="gap-2 text-sm sm:text-base h-8 sm:h-10"
+                  >
                     <Trash2 className="h-4 w-4" />
-                    Clear All
+                    <span className="hidden sm:inline">Clear All</span>
+                    <span className="sm:hidden">Clear</span>
                   </Button>
                 </AlertDialogTrigger>
-                <AlertDialogContent>
+                <AlertDialogContent className="mx-3 sm:mx-0">
                   <AlertDialogHeader>
                     <AlertDialogTitle>Clear all favorites?</AlertDialogTitle>
                     <AlertDialogDescription>
@@ -219,9 +225,14 @@ export default function FavoritesPage() {
                       action cannot be undone.
                     </AlertDialogDescription>
                   </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction onClick={handleClearAllFavorites}>
+                  <AlertDialogFooter className="flex-col sm:flex-row gap-2">
+                    <AlertDialogCancel className="w-full sm:w-auto">
+                      Cancel
+                    </AlertDialogCancel>
+                    <AlertDialogAction
+                      onClick={handleClearAllFavorites}
+                      className="w-full sm:w-auto"
+                    >
                       Clear All
                     </AlertDialogAction>
                   </AlertDialogFooter>
@@ -232,18 +243,18 @@ export default function FavoritesPage() {
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
           <Card>
-            <CardContent className="p-4">
-              <div className="flex items-center space-x-3">
-                <div className="p-2 rounded-lg bg-yellow-100 text-yellow-600">
-                  <Star className="h-5 w-5" />
+            <CardContent className="p-3 sm:p-4">
+              <div className="flex items-center space-x-2 sm:space-x-3">
+                <div className="p-1.5 sm:p-2 rounded-lg bg-yellow-100 text-yellow-600 flex-shrink-0">
+                  <Star className="h-4 w-4 sm:h-5 sm:w-5" />
                 </div>
-                <div>
-                  <div className="text-2xl font-bold">
+                <div className="min-w-0">
+                  <div className="text-lg sm:text-2xl font-bold">
                     {favoriteTeams.length}
                   </div>
-                  <div className="text-sm text-muted-foreground">
+                  <div className="text-xs sm:text-sm text-muted-foreground">
                     Favorite Teams
                   </div>
                 </div>
@@ -252,16 +263,16 @@ export default function FavoritesPage() {
           </Card>
 
           <Card>
-            <CardContent className="p-4">
-              <div className="flex items-center space-x-3">
-                <div className="p-2 rounded-lg bg-blue-100 text-blue-600">
-                  <Users className="h-5 w-5" />
+            <CardContent className="p-3 sm:p-4">
+              <div className="flex items-center space-x-2 sm:space-x-3">
+                <div className="p-1.5 sm:p-2 rounded-lg bg-blue-100 text-blue-600 flex-shrink-0">
+                  <Users className="h-4 w-4 sm:h-5 sm:w-5" />
                 </div>
-                <div>
-                  <div className="text-2xl font-bold">
+                <div className="min-w-0">
+                  <div className="text-lg sm:text-2xl font-bold">
                     {filteredTeams.length}
                   </div>
-                  <div className="text-sm text-muted-foreground">
+                  <div className="text-xs sm:text-sm text-muted-foreground">
                     Available to Add
                   </div>
                 </div>
@@ -269,14 +280,14 @@ export default function FavoritesPage() {
             </CardContent>
           </Card>
 
-          <Card>
-            <CardContent className="p-4">
-              <div className="flex items-center space-x-3">
-                <div className="p-2 rounded-lg bg-green-100 text-green-600">
-                  <Calendar className="h-5 w-5" />
+          <Card className="sm:col-span-1 col-span-1">
+            <CardContent className="p-3 sm:p-4">
+              <div className="flex items-center space-x-2 sm:space-x-3">
+                <div className="p-1.5 sm:p-2 rounded-lg bg-green-100 text-green-600 flex-shrink-0">
+                  <Calendar className="h-4 w-4 sm:h-5 sm:w-5" />
                 </div>
-                <div>
-                  <div className="text-2xl font-bold">
+                <div className="min-w-0 flex-1">
+                  <div className="text-sm sm:text-2xl font-bold truncate">
                     {favoriteTeams.length > 0
                       ? new Date(
                           Math.max(
@@ -287,7 +298,7 @@ export default function FavoritesPage() {
                         ).toLocaleDateString()
                       : "N/A"}
                   </div>
-                  <div className="text-sm text-muted-foreground">
+                  <div className="text-xs sm:text-sm text-muted-foreground">
                     Last Added
                   </div>
                 </div>
@@ -300,22 +311,28 @@ export default function FavoritesPage() {
       {/* Favorite Teams Display */}
       {favoriteTeams.length === 0 ? (
         <Card>
-          <CardContent className="p-12 text-center">
-            <StarOff className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-            <h3 className="text-xl font-semibold mb-2">
+          <CardContent className="p-6 sm:p-12 text-center">
+            <StarOff className="h-12 w-12 sm:h-16 sm:w-16 text-muted-foreground mx-auto mb-4" />
+            <h3 className="text-lg sm:text-xl font-semibold mb-2">
               No favorite teams yet
             </h3>
-            <p className="text-muted-foreground mb-6">
+            <p className="text-sm sm:text-base text-muted-foreground mb-4 sm:mb-6">
               Start building your collection by adding your favorite Premier
               League teams.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button onClick={() => setShowAddDialog(true)} className="gap-2">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+              <Button
+                onClick={() => setShowAddDialog(true)}
+                className="gap-2 text-sm sm:text-base"
+              >
                 <Plus className="h-4 w-4" />
                 Add Your First Team
               </Button>
               <Link href="/teams">
-                <Button variant="outline" className="gap-2">
+                <Button
+                  variant="outline"
+                  className="gap-2 w-full sm:w-auto text-sm sm:text-base"
+                >
                   <Users className="h-4 w-4" />
                   Browse All Teams
                 </Button>
@@ -324,15 +341,20 @@ export default function FavoritesPage() {
           </CardContent>
         </Card>
       ) : (
-        <div className="space-y-6">
-          <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-bold">Your Favorite Teams</h2>
-            <Badge variant="secondary" className="text-lg px-4 py-2">
+        <div className="space-y-4 sm:space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+            <h2 className="text-xl sm:text-2xl font-bold">
+              Your Favorite Teams
+            </h2>
+            <Badge
+              variant="secondary"
+              className="text-sm sm:text-lg px-3 sm:px-4 py-1 sm:py-2 w-fit"
+            >
               {favoriteTeams.length} Teams
             </Badge>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
             {favoriteTeams.map((favoriteTeam) => {
               const fullTeam = allTeams.find(
                 (team) => team.idTeam === favoriteTeam.idTeam,
@@ -341,15 +363,15 @@ export default function FavoritesPage() {
               if (!fullTeam) {
                 return (
                   <Card key={favoriteTeam.idTeam}>
-                    <CardContent className="p-6 text-center">
-                      <div className="space-y-4">
-                        <div className="h-12 w-12 rounded-full bg-muted mx-auto flex items-center justify-center">
-                          <span className="text-sm font-bold">
+                    <CardContent className="p-4 sm:p-6 text-center">
+                      <div className="space-y-3 sm:space-y-4">
+                        <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-muted mx-auto flex items-center justify-center">
+                          <span className="text-xs sm:text-sm font-bold">
                             {favoriteTeam.strTeam.substring(0, 2).toUpperCase()}
                           </span>
                         </div>
                         <div>
-                          <h3 className="font-semibold">
+                          <h3 className="font-semibold text-sm sm:text-base">
                             {favoriteTeam.strTeam}
                           </h3>
                           <p className="text-xs text-muted-foreground">
@@ -368,7 +390,7 @@ export default function FavoritesPage() {
                               favoriteTeam.strTeam,
                             )
                           }
-                          className="gap-2 w-full"
+                          className="gap-2 w-full text-xs sm:text-sm"
                         >
                           <Trash2 className="h-3 w-3" />
                           Remove
@@ -382,18 +404,18 @@ export default function FavoritesPage() {
               return (
                 <div key={favoriteTeam.idTeam} className="relative group">
                   <TeamCard team={fullTeam} showFavoriteButton={false} />
-                  <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <div className="absolute top-2 right-2 opacity-100 hover:opacity-80">
                     <AlertDialog>
                       <AlertDialogTrigger asChild>
                         <Button
                           variant="destructive"
                           size="icon"
-                          className="h-8 w-8"
+                          className="h-7 w-7 sm:h-8 sm:w-8"
                         >
-                          <Trash2 className="h-4 w-4" />
+                          <Trash2 className="h-3 w-3 sm:h-4 sm:w-4" />
                         </Button>
                       </AlertDialogTrigger>
-                      <AlertDialogContent>
+                      <AlertDialogContent className="mx-3 sm:mx-0">
                         <AlertDialogHeader>
                           <AlertDialogTitle>
                             Remove from favorites?
@@ -403,8 +425,10 @@ export default function FavoritesPage() {
                             from your favorites?
                           </AlertDialogDescription>
                         </AlertDialogHeader>
-                        <AlertDialogFooter>
-                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogFooter className="flex-col sm:flex-row gap-2">
+                          <AlertDialogCancel className="w-full sm:w-auto">
+                            Cancel
+                          </AlertDialogCancel>
                           <AlertDialogAction
                             onClick={() =>
                               handleRemoveFromFavorites(
@@ -412,6 +436,7 @@ export default function FavoritesPage() {
                                 fullTeam.strTeam,
                               )
                             }
+                            className="w-full sm:w-auto"
                           >
                             Remove
                           </AlertDialogAction>
@@ -432,16 +457,22 @@ export default function FavoritesPage() {
 
           {/* Quick Links */}
           <div className="flex justify-center">
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link href="/schedule">
-                <Button variant="outline" className="gap-2">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto">
+              <Link href="/schedule" className="w-full sm:w-auto">
+                <Button
+                  variant="outline"
+                  className="gap-2 w-full text-sm sm:text-base"
+                >
                   <Calendar className="h-4 w-4" />
                   View Schedule
                   <ArrowRight className="h-4 w-4" />
                 </Button>
               </Link>
-              <Link href="/teams">
-                <Button variant="outline" className="gap-2">
+              <Link href="/teams" className="w-full sm:w-auto">
+                <Button
+                  variant="outline"
+                  className="gap-2 w-full text-sm sm:text-base"
+                >
                   <Users className="h-4 w-4" />
                   Browse All Teams
                   <ArrowRight className="h-4 w-4" />
@@ -454,20 +485,21 @@ export default function FavoritesPage() {
 
       {/* Add Team Dialog */}
       {showAddDialog && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
-          <Card className="w-full max-w-4xl max-h-[80vh] overflow-hidden">
-            <CardHeader>
-              <CardTitle className="flex items-center justify-between">
-                <span className="flex items-center gap-2">
-                  <Plus className="h-5 w-5" />
-                  Add Team to Favorites
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/50">
+          <Card className="w-full max-w-4xl max-h-[90vh] sm:max-h-[80vh] overflow-hidden">
+            <CardHeader className="pb-3 sm:pb-6">
+              <CardTitle className="flex items-center justify-between text-base sm:text-lg">
+                <span className="flex items-center gap-2 min-w-0">
+                  <Plus className="h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0" />
+                  <span className="truncate">Add Team to Favorites</span>
                 </span>
                 <Button
                   variant="ghost"
                   size="icon"
                   onClick={() => setShowAddDialog(false)}
+                  className="h-8 w-8 flex-shrink-0"
                 >
-                  ×
+                  <X className="h-4 w-4" />
                 </Button>
               </CardTitle>
               <div className="relative">
@@ -476,22 +508,22 @@ export default function FavoritesPage() {
                   placeholder="Search teams..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10"
+                  className="pl-10 text-sm sm:text-base"
                 />
               </div>
             </CardHeader>
-            <CardContent className="overflow-y-auto max-h-96">
+            <CardContent className="overflow-y-auto max-h-[60vh] sm:max-h-96">
               {filteredTeams.length === 0 ? (
-                <div className="text-center py-8">
-                  <Users className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                  <p className="text-muted-foreground">
+                <div className="text-center py-6 sm:py-8">
+                  <Users className="h-10 w-10 sm:h-12 sm:w-12 text-muted-foreground mx-auto mb-4" />
+                  <p className="text-sm sm:text-base text-muted-foreground">
                     {searchQuery
                       ? "No teams match your search"
                       : "All teams are already in your favorites!"}
                   </p>
                 </div>
               ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                   {filteredTeams.map((team) => (
                     <Card
                       key={team.idTeam}
@@ -501,25 +533,27 @@ export default function FavoritesPage() {
                         setShowAddDialog(false);
                       }}
                     >
-                      <CardContent className="p-4">
-                        <div className="flex items-center space-x-3">
-                          <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center">
-                            <Avatar>
+                      <CardContent className="p-3 sm:p-4">
+                        <div className="flex items-center space-x-2 sm:space-x-3">
+                          <div className="h-10 w-10 sm:h-12 sm:w-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                            <Avatar className="h-8 w-8 sm:h-10 sm:w-10">
                               <AvatarImage src={team.strBadge} />
-                              <AvatarFallback className="text-sm">
+                              <AvatarFallback className="text-xs sm:text-sm">
                                 {team.strTeam.substring(0, 2).toUpperCase()}
                               </AvatarFallback>
                             </Avatar>
                           </div>
-                          <div className="flex-1">
-                            <h3 className="font-semibold">{team.strTeam}</h3>
+                          <div className="flex-1 min-w-0">
+                            <h3 className="font-semibold text-sm sm:text-base truncate">
+                              {team.strTeam}
+                            </h3>
                             {team.strTeamShort && (
-                              <p className="text-sm text-muted-foreground">
+                              <p className="text-xs sm:text-sm text-muted-foreground">
                                 {team.strTeamShort}
                               </p>
                             )}
                           </div>
-                          <Heart className="h-4 w-4 text-muted-foreground" />
+                          <Heart className="h-4 w-4 text-muted-foreground flex-shrink-0" />
                         </div>
                       </CardContent>
                     </Card>

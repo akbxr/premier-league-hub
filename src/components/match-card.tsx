@@ -73,47 +73,47 @@ const MatchCard: React.FC<MatchCardProps> = ({
         <Card
           className={`hover:shadow-md transition-shadow cursor-pointer ${className}`}
         >
-          <CardContent className="px-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-4 flex-1">
-                <div className="flex items-center space-x-2">
-                  <Avatar>
+          <CardContent className="p-3 sm:p-4">
+            <div className="flex items-center justify-between gap-2">
+              <div className="flex items-center space-x-1 sm:space-x-3 flex-1 min-w-0">
+                <div className="flex items-center space-x-1 sm:space-x-2 min-w-0">
+                  <Avatar className="h-6 w-6 sm:h-8 sm:w-8 flex-shrink-0">
                     <AvatarImage src={match.strHomeTeamBadge} />
                     <AvatarFallback className="text-xs">
                       {match.strHomeTeam.substring(0, 2).toUpperCase()}
                     </AvatarFallback>
                   </Avatar>
-                  <span className="text-sm font-medium truncate">
+                  <span className="text-xs sm:text-sm font-medium truncate">
                     {match.strHomeTeam}
                   </span>
                   {hasResult && showResult && (
-                    <Badge variant="outline" className="text-xs">
+                    <Badge variant="outline" className="text-xs px-1">
                       {match.intHomeScore}
                     </Badge>
                   )}
                 </div>
 
-                <div className="text-xs text-muted-foreground">vs</div>
+                <div className="text-xs text-muted-foreground px-1">vs</div>
 
-                <div className="flex items-center space-x-2">
-                  <Avatar>
+                <div className="flex items-center space-x-1 sm:space-x-2 min-w-0">
+                  <Avatar className="h-6 w-6 sm:h-8 sm:w-8 flex-shrink-0">
                     <AvatarImage src={match.strAwayTeamBadge} />
                     <AvatarFallback className="text-xs">
                       {match.strAwayTeam.substring(0, 2).toUpperCase()}
                     </AvatarFallback>
                   </Avatar>
-                  <span className="text-sm font-medium truncate">
+                  <span className="text-xs sm:text-sm font-medium truncate">
                     {match.strAwayTeam}
                   </span>
                   {hasResult && showResult && (
-                    <Badge variant="outline" className="text-xs">
+                    <Badge variant="outline" className="text-xs px-1">
                       {match.intAwayScore}
                     </Badge>
                   )}
                 </div>
               </div>
 
-              <div className="text-right">
+              <div className="text-right flex-shrink-0">
                 <Badge
                   variant={getStatusVariant(getMatchStatus())}
                   className="text-xs"
@@ -137,7 +137,7 @@ const MatchCard: React.FC<MatchCardProps> = ({
         className={`hover:shadow-lg transition-all duration-300 ${className}`}
       >
         {match.strThumb && (
-          <div className="relative h-48 w-full overflow-hidden rounded-t-lg">
+          <div className="relative h-32 sm:h-48 w-full overflow-hidden rounded-t-lg">
             <Image
               src={match.strThumb}
               alt={`${match.strHomeTeam} vs ${match.strAwayTeam}`}
@@ -145,43 +145,52 @@ const MatchCard: React.FC<MatchCardProps> = ({
               className="object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-            <div className="absolute bottom-4 left-4 text-white">
-              <h3 className="text-lg font-bold">
+            <div className="absolute bottom-2 sm:bottom-4 left-2 sm:left-4 text-white">
+              <h3 className="text-sm sm:text-lg font-bold">
                 {match.strHomeTeam} vs {match.strAwayTeam}
               </h3>
-              <p className="text-sm opacity-90">{match.strLeague}</p>
+              <p className="text-xs sm:text-sm opacity-90">{match.strLeague}</p>
             </div>
           </div>
         )}
 
-        <CardHeader className="space-y-4">
+        <CardHeader className="space-y-3 sm:space-y-4 p-3 sm:p-6">
           <div className="flex items-center justify-between">
-            <Badge variant={getStatusVariant(getMatchStatus())}>
+            <Badge
+              variant={getStatusVariant(getMatchStatus())}
+              className="text-xs"
+            >
               {getMatchStatus()}
             </Badge>
             {match.strSeason && (
-              <Badge variant="outline">{match.strSeason}</Badge>
+              <Badge variant="outline" className="text-xs">
+                {match.strSeason}
+              </Badge>
             )}
           </div>
 
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <div className="text-center">
-                <div className="flex items-center space-x-2 mb-2">
-                  <Avatar className="h-8 w-8">
+          <div className="flex items-center justify-center">
+            <div className="flex flex-col sm:flex-row items-center space-y-3 sm:space-y-0 sm:space-x-4 w-full">
+              <div className="text-center flex-1">
+                <div className="flex flex-col sm:flex-row items-center justify-center space-y-1 sm:space-y-0 sm:space-x-2 mb-2">
+                  <Avatar className="h-6 w-6 sm:h-8 sm:w-8">
                     <AvatarImage src={match.strHomeTeamBadge} />
                     <AvatarFallback className="text-xs">
                       {match.strHomeTeam.substring(0, 2).toUpperCase()}
                     </AvatarFallback>
                   </Avatar>
-                  <span className="font-semibold">{match.strHomeTeam}</span>
+                  <span className="font-semibold text-sm sm:text-base truncate max-w-[120px] sm:max-w-none">
+                    {match.strHomeTeam}
+                  </span>
                 </div>
                 {hasResult && showResult && (
-                  <div className="text-2xl font-bold">{match.intHomeScore}</div>
+                  <div className="text-xl sm:text-2xl font-bold">
+                    {match.intHomeScore}
+                  </div>
                 )}
               </div>
 
-              <div className="text-center px-4">
+              <div className="text-center px-2 sm:px-4">
                 <div className="text-muted-foreground text-sm mb-1">VS</div>
                 {!hasResult && (
                   <div className="text-xs text-muted-foreground">
@@ -190,10 +199,12 @@ const MatchCard: React.FC<MatchCardProps> = ({
                 )}
               </div>
 
-              <div className="text-center">
-                <div className="flex items-center space-x-2 mb-2">
-                  <span className="font-semibold">{match.strAwayTeam}</span>
-                  <Avatar className="h-8 w-8">
+              <div className="text-center flex-1">
+                <div className="flex flex-col sm:flex-row items-center justify-center space-y-1 sm:space-y-0 sm:space-x-2 mb-2">
+                  <span className="font-semibold text-sm sm:text-base truncate max-w-[120px] sm:max-w-none order-2 sm:order-1">
+                    {match.strAwayTeam}
+                  </span>
+                  <Avatar className="h-6 w-6 sm:h-8 sm:w-8 order-1 sm:order-2">
                     <AvatarImage src={match.strAwayTeamBadge} />
                     <AvatarFallback className="text-xs">
                       {match.strAwayTeam.substring(0, 2).toUpperCase()}
@@ -201,36 +212,38 @@ const MatchCard: React.FC<MatchCardProps> = ({
                   </Avatar>
                 </div>
                 {hasResult && showResult && (
-                  <div className="text-2xl font-bold">{match.intAwayScore}</div>
+                  <div className="text-xl sm:text-2xl font-bold">
+                    {match.intAwayScore}
+                  </div>
                 )}
               </div>
             </div>
           </div>
         </CardHeader>
 
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-2 gap-4 text-sm">
+        <CardContent className="space-y-3 sm:space-y-4 p-3 sm:p-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 text-xs sm:text-sm">
             <div className="flex items-center space-x-2">
-              <Calendar className="h-4 w-4 text-muted-foreground" />
-              <span>{indonesianTime}</span>
+              <Calendar className="h-3 w-3 sm:h-4 sm:w-4 text-muted-foreground flex-shrink-0" />
+              <span className="truncate">{indonesianTime}</span>
             </div>
             {match.strVenue && (
               <div className="flex items-center space-x-2">
-                <MapPin className="h-4 w-4 text-muted-foreground" />
+                <MapPin className="h-3 w-3 sm:h-4 sm:w-4 text-muted-foreground flex-shrink-0" />
                 <span className="truncate">{match.strVenue}</span>
               </div>
             )}
           </div>
 
           {match.strDescriptionEN && (
-            <p className="text-sm text-muted-foreground line-clamp-2">
+            <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2">
               {match.strDescriptionEN}
             </p>
           )}
 
           <Link href={`/matches/${match.idEvent}`}>
-            <Button className="w-full">
-              <Eye className="mr-2 h-4 w-4" />
+            <Button className="w-full text-sm">
+              <Eye className="mr-2 h-3 w-3 sm:h-4 sm:w-4" />
               View Details
             </Button>
           </Link>
@@ -245,41 +258,52 @@ const MatchCard: React.FC<MatchCardProps> = ({
       <Card
         className={`hover:shadow-md transition-shadow cursor-pointer group ${className}`}
       >
-        <CardContent className="p-6">
-          <div className="space-y-4">
+        <CardContent className="p-3 sm:p-4 lg:p-6">
+          <div className="space-y-3 sm:space-y-4">
             {/* Header */}
             <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-2">
-                <Trophy className="h-4 w-4 text-muted-foreground" />
-                <span className="text-sm font-medium">{match.strLeague}</span>
+              <div className="flex items-center space-x-2 min-w-0 flex-1">
+                <Trophy className="h-3 w-3 sm:h-4 sm:w-4 text-muted-foreground flex-shrink-0" />
+                <span className="text-xs sm:text-sm font-medium truncate">
+                  {match.strLeague}
+                </span>
               </div>
-              <Badge variant={getStatusVariant(getMatchStatus())}>
+              <Badge
+                variant={getStatusVariant(getMatchStatus())}
+                className="text-xs flex-shrink-0"
+              >
                 {getMatchStatus()}
               </Badge>
             </div>
 
             {/* Teams and Score */}
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-3 flex-1">
-                <Avatar className="h-10 w-10">
+            <div className="flex items-center justify-between gap-2">
+              <div className="flex items-center space-x-2 sm:space-x-3 flex-1 min-w-0">
+                <Avatar className="h-8 w-8 sm:h-10 sm:w-10 flex-shrink-0">
                   <AvatarImage src={match.strHomeTeamBadge} />
-                  <AvatarFallback className="text-sm">
+                  <AvatarFallback className="text-xs sm:text-sm">
                     {match.strHomeTeam.substring(0, 2).toUpperCase()}
                   </AvatarFallback>
                 </Avatar>
-                <div className="flex-1">
-                  <p className="font-semibold group-hover:text-primary transition-colors">
+                <div className="flex-1 min-w-0">
+                  <p className="font-semibold group-hover:text-primary transition-colors text-xs sm:text-sm lg:text-base truncate">
                     {match.strHomeTeam}
                   </p>
-                  <p className="text-sm text-muted-foreground">Home</p>
+                  <p className="text-xs sm:text-sm text-muted-foreground">
+                    Home
+                  </p>
                 </div>
                 {hasResult && showResult && (
-                  <div className="text-xl font-bold">{match.intHomeScore}</div>
+                  <div className="text-lg sm:text-xl font-bold flex-shrink-0">
+                    {match.intHomeScore}
+                  </div>
                 )}
               </div>
 
-              <div className="px-4 text-center">
-                <div className="text-muted-foreground text-sm">VS</div>
+              <div className="px-2 sm:px-4 text-center flex-shrink-0">
+                <div className="text-muted-foreground text-xs sm:text-sm">
+                  VS
+                </div>
                 {!hasResult && match.strTime && (
                   <div className="text-xs text-muted-foreground">
                     {format(matchDate, "HH:mm")}
@@ -287,19 +311,23 @@ const MatchCard: React.FC<MatchCardProps> = ({
                 )}
               </div>
 
-              <div className="flex items-center space-x-3 flex-1 justify-end">
+              <div className="flex items-center space-x-2 sm:space-x-3 flex-1 justify-end min-w-0">
                 {hasResult && showResult && (
-                  <div className="text-xl font-bold">{match.intAwayScore}</div>
+                  <div className="text-lg sm:text-xl font-bold flex-shrink-0">
+                    {match.intAwayScore}
+                  </div>
                 )}
-                <div className="flex-1 text-right">
-                  <p className="font-semibold group-hover:text-primary transition-colors">
+                <div className="flex-1 text-right min-w-0">
+                  <p className="font-semibold group-hover:text-primary transition-colors text-xs sm:text-sm lg:text-base truncate">
                     {match.strAwayTeam}
                   </p>
-                  <p className="text-sm text-muted-foreground">Away</p>
+                  <p className="text-xs sm:text-sm text-muted-foreground">
+                    Away
+                  </p>
                 </div>
-                <Avatar className="h-10 w-10">
+                <Avatar className="h-8 w-8 sm:h-10 sm:w-10 flex-shrink-0">
                   <AvatarImage src={match.strAwayTeamBadge} />
-                  <AvatarFallback className="text-sm">
+                  <AvatarFallback className="text-xs sm:text-sm">
                     {match.strAwayTeam.substring(0, 2).toUpperCase()}
                   </AvatarFallback>
                 </Avatar>
@@ -309,18 +337,21 @@ const MatchCard: React.FC<MatchCardProps> = ({
             <Separator />
 
             {/* Match Info */}
-            <div className="flex items-center justify-between text-sm text-muted-foreground">
-              <div className="flex items-center space-x-2">
-                <Calendar className="h-3 w-3" />
-                <span>{indonesianTime}</span>
+            <div className="flex items-center justify-between text-xs sm:text-sm text-muted-foreground gap-2">
+              <div className="flex items-center space-x-2 min-w-0">
+                <Calendar className="h-3 w-3 flex-shrink-0" />
+                <span className="truncate">{indonesianTime}</span>
               </div>
               {match.strVenue && (
-                <div className="flex items-center space-x-2">
-                  <MapPin className="h-3 w-3" />
+                <div className="flex items-center space-x-2 min-w-0 flex-1 justify-center">
+                  <MapPin className="h-3 w-3 flex-shrink-0" />
                   <span className="truncate">{match.strVenue}</span>
                 </div>
               )}
-              <ChevronRight className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="hidden sm:flex items-center space-x-2 opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0">
+                <span>details</span>
+                <ChevronRight className="h-4 w-4" />
+              </div>
             </div>
           </div>
         </CardContent>

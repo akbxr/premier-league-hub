@@ -221,24 +221,28 @@ export default function SchedulePage() {
     <div className="container mx-auto px-4 py-8 space-y-8">
       {/* Header */}
       <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-4xl font-bold flex items-center gap-3">
-              <Calendar className="h-10 w-10 text-primary" />
-              Premier League Schedule
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <div className="min-w-0">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold flex items-center gap-2 sm:gap-3">
+              <Calendar className="h-6 w-6 sm:h-8 sm:w-8 lg:h-10 lg:w-10 text-primary flex-shrink-0" />
+              <span className="truncate">Schedule</span>
             </h1>
-            <p className="text-muted-foreground text-lg">
+            <p className="text-muted-foreground text-sm sm:text-base lg:text-lg">
               Complete match schedule and results
             </p>
           </div>
-          <Button onClick={handleRefresh} variant="outline" className="gap-2">
+          <Button
+            onClick={handleRefresh}
+            variant="outline"
+            className="gap-2 self-start sm:self-auto"
+          >
             <RefreshCw className="h-4 w-4" />
-            Refresh
+            <span className="hidden sm:inline">Refresh</span>
           </Button>
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
           <Card>
             <CardContent className="p-4">
               <div className="flex items-center space-x-3">
@@ -258,16 +262,16 @@ export default function SchedulePage() {
           </Card>
 
           <Card>
-            <CardContent className="p-4">
-              <div className="flex items-center space-x-3">
-                <div className="p-2 rounded-lg bg-green-100 text-green-600">
-                  <CalendarDays className="h-5 w-5" />
+            <CardContent className="p-3 sm:p-4">
+              <div className="flex items-center space-x-2 sm:space-x-3">
+                <div className="p-2 rounded-lg bg-green-100 text-green-600 flex-shrink-0">
+                  <CalendarDays className="h-4 w-4 sm:h-5 sm:w-5" />
                 </div>
-                <div>
-                  <div className="text-2xl font-bold">
+                <div className="min-w-0">
+                  <div className="text-lg sm:text-xl lg:text-2xl font-bold">
                     {filteredUpcoming.length}
                   </div>
-                  <div className="text-sm text-muted-foreground">
+                  <div className="text-xs sm:text-sm text-muted-foreground">
                     Upcoming Matches
                   </div>
                 </div>
@@ -276,15 +280,17 @@ export default function SchedulePage() {
           </Card>
 
           <Card>
-            <CardContent className="p-4">
-              <div className="flex items-center space-x-3">
-                <div className="p-2 rounded-lg bg-purple-100 text-purple-600">
-                  <Trophy className="h-5 w-5" />
+            <CardContent className="p-3 sm:p-4">
+              <div className="flex items-center space-x-2 sm:space-x-3">
+                <div className="p-2 rounded-lg bg-blue-100 text-blue-600 flex-shrink-0">
+                  <Clock className="h-4 w-4 sm:h-5 sm:w-5" />
                 </div>
-                <div>
-                  <div className="text-2xl font-bold">{allTeams.length}</div>
-                  <div className="text-sm text-muted-foreground">
-                    Teams Playing
+                <div className="min-w-0">
+                  <div className="text-lg sm:text-xl lg:text-2xl font-bold">
+                    {filteredPrevious.length}
+                  </div>
+                  <div className="text-xs sm:text-sm text-muted-foreground">
+                    Recent Matches
                   </div>
                 </div>
               </div>
@@ -295,13 +301,13 @@ export default function SchedulePage() {
 
       {/* Filter Controls */}
       <Card>
-        <CardContent className="">
-          <div className="flex flex-col lg:flex-row gap-4 items-center">
+        <CardContent className="p-3 sm:p-4 lg:p-6">
+          <div className="flex flex-col gap-3 sm:gap-4">
             {/* Team Filter */}
             <div className="flex items-center gap-2">
-              <Filter className="h-4 w-4 text-muted-foreground" />
+              <Filter className="h-4 w-4 text-muted-foreground flex-shrink-0" />
               <Select value={filterTeam} onValueChange={setFilterTeam}>
-                <SelectTrigger className="w-48">
+                <SelectTrigger className="w-full sm:w-auto sm:min-w-[180px]">
                   <SelectValue placeholder="Filter by team" />
                 </SelectTrigger>
                 <SelectContent>
@@ -315,24 +321,28 @@ export default function SchedulePage() {
               </Select>
             </div>
 
-            {/* View Mode Toggle */}
-            <div className="flex border rounded-lg">
-              <Button
-                variant={viewMode === "default" ? "default" : "ghost"}
-                size="sm"
-                onClick={() => setViewMode("default")}
-                className="rounded-r-none"
-              >
-                Detailed
-              </Button>
-              <Button
-                variant={viewMode === "compact" ? "default" : "ghost"}
-                size="sm"
-                onClick={() => setViewMode("compact")}
-                className="rounded-l-none"
-              >
-                Compact
-              </Button>
+            {/* Controls Row */}
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 lg:gap-4">
+              {/* View Mode Toggle */}
+              <div className="flex border rounded-lg self-start sm:self-auto">
+                <Button
+                  variant={viewMode === "default" ? "default" : "ghost"}
+                  size="sm"
+                  onClick={() => setViewMode("default")}
+                  className="rounded-r-none px-3"
+                >
+                  <span className="hidden sm:inline">Detailed</span>
+                  <span className="sm:hidden">Detail</span>
+                </Button>
+                <Button
+                  variant={viewMode === "compact" ? "default" : "ghost"}
+                  size="sm"
+                  onClick={() => setViewMode("compact")}
+                  className="rounded-l-none px-3"
+                >
+                  Compact
+                </Button>
+              </div>
             </div>
           </div>
         </CardContent>
@@ -340,7 +350,7 @@ export default function SchedulePage() {
 
       {/* Schedule Content */}
       <Tabs defaultValue="previous" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-3 lg:w-[600px]">
+        <TabsList className="grid w-full grid-cols-3 sm:w-auto sm:grid-cols-3">
           <TabsTrigger value="previous" className="gap-2">
             <Clock className="h-4 w-4" />
             Previous
@@ -376,7 +386,7 @@ export default function SchedulePage() {
               className={
                 viewMode === "compact"
                   ? "space-y-2"
-                  : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                  : "grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-4 lg:gap-6"
               }
             >
               {filteredUpcoming.map((match) => (

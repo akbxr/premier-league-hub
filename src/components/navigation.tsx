@@ -72,13 +72,16 @@ const Navigation: React.FC<NavigationProps> = ({ className }) => {
         className,
       )}
     >
-      <div className="container flex h-16 items-center justify-between">
+      <div className="container flex h-14 sm:h-16 items-center justify-between px-3 sm:px-4">
         {/* Logo */}
-        <Link href="/" className="flex items-center space-x-2">
-          <div className="flex m-4 h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-            <Trophy className="h-5 w-5" />
+        <Link href="/" className="flex items-center space-x-2 min-w-0">
+          <div className="flex h-6 w-6 sm:h-8 sm:w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground flex-shrink-0">
+            <Trophy className="h-3 w-3 sm:h-5 sm:w-5" />
           </div>
-          <span className="text-xl font-bold">Premier League Hub</span>
+          <span className="text-sm sm:text-lg lg:text-xl font-bold truncate">
+            <span className="sm:hidden">PL Hub</span>
+            <span className="hidden sm:inline">Premier League Hub</span>
+          </span>
         </Link>
 
         {/* Desktop Navigation */}
@@ -110,22 +113,23 @@ const Navigation: React.FC<NavigationProps> = ({ className }) => {
         <Button
           variant="ghost"
           size="icon"
-          className="md:hidden"
+          className="md:hidden h-8 w-8 sm:h-10 sm:w-10"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          aria-label="Toggle menu"
         >
           {isMobileMenuOpen ? (
-            <X className="h-5 w-5" />
+            <X className="h-4 w-4 sm:h-5 sm:w-5" />
           ) : (
-            <Menu className="h-5 w-5" />
+            <Menu className="h-4 w-4 sm:h-5 sm:w-5" />
           )}
         </Button>
       </div>
 
       {/* Mobile Navigation */}
       {isMobileMenuOpen && (
-        <div className="border-t bg-background md:hidden">
-          <div className="container py-4">
-            <nav className="flex flex-col space-y-2">
+        <div className="border-t bg-background md:hidden shadow-lg">
+          <div className="container py-3 sm:py-4 px-3 sm:px-4">
+            <nav className="flex flex-col space-y-1">
               {navigationItems.map((item) => {
                 const Icon = item.icon;
                 return (
@@ -134,14 +138,14 @@ const Navigation: React.FC<NavigationProps> = ({ className }) => {
                     href={item.href}
                     onClick={() => setIsMobileMenuOpen(false)}
                     className={cn(
-                      "flex items-center space-x-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground",
+                      "flex items-center space-x-3 rounded-lg px-3 py-3 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground active:bg-accent/80",
                       isActive(item.href) && "bg-accent text-accent-foreground",
                     )}
                   >
-                    <Icon className="h-4 w-4" />
-                    <div className="flex flex-col">
-                      <span>{item.title}</span>
-                      <span className="text-xs text-muted-foreground">
+                    <Icon className="h-4 w-4 flex-shrink-0" />
+                    <div className="flex flex-col min-w-0 flex-1">
+                      <span className="font-medium">{item.title}</span>
+                      <span className="text-xs text-muted-foreground truncate">
                         {item.description}
                       </span>
                     </div>

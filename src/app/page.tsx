@@ -66,7 +66,7 @@ export default function HomePage() {
           getPremierLeague(),
         ]);
 
-        setTeams(teamsData.slice(0, 8)); // Show only first 8 teams on home page
+        setTeams(teamsData.slice(0, 9)); // Show only first 9 teams on home page
         setRecentMatches(recentMatchesData.slice(0, 6)); // Show 6 recent matches
         setPreviousSeasonMatches(previousSeasonMatchesData.slice(0, 6)); // Show 6 previous season matches
         setUpcomingMatches(upcomingMatchesData.slice(0, 6)); // Show 6 upcoming matches
@@ -166,32 +166,36 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background to-muted/20">
-      <div className="container mx-auto px-4 py-8 space-y-12">
+      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8 space-y-6 sm:space-y-8 lg:space-y-12">
         {/* Hero Section */}
-        <section className="text-center space-y-6">
-          <div className="space-y-4">
-            <Badge variant="secondary" className="text-sm">
+        <section className="text-center space-y-4 sm:space-y-6">
+          <div className="space-y-3 sm:space-y-4">
+            <Badge variant="secondary" className="text-xs sm:text-sm">
               Welcome to Premier League Hub
             </Badge>
-            <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent leading-tight">
               Your Ultimate Premier League Experience
             </h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-sm sm:text-base lg:text-xl text-muted-foreground max-w-2xl mx-auto px-4">
               Explore teams, track schedules, view standings, and follow your
               favorite Premier League teams all in one place.
             </p>
           </div>
 
-          <div className="flex flex-wrap justify-center gap-4">
-            <Link href="/teams">
-              <Button size="lg" className="gap-2">
-                <Users className="h-5 w-5" />
+          <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 px-4">
+            <Link href="/teams" className="w-full sm:w-auto">
+              <Button size="default" className="gap-2 w-full sm:w-auto">
+                <Users className="h-4 w-4 sm:h-5 sm:w-5" />
                 Browse Teams
               </Button>
             </Link>
-            <Link href="/schedule">
-              <Button variant="outline" size="lg" className="gap-2">
-                <Calendar className="h-5 w-5" />
+            <Link href="/schedule" className="w-full sm:w-auto">
+              <Button
+                variant="outline"
+                size="default"
+                className="gap-2 w-full sm:w-auto"
+              >
+                <Calendar className="h-4 w-4 sm:h-5 sm:w-5" />
                 View Schedule
               </Button>
             </Link>
@@ -199,24 +203,28 @@ export default function HomePage() {
         </section>
 
         {/* Stats Section */}
-        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <section className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
           {stats.map((stat, index) => {
             const Icon = stat.icon;
             return (
               <Card key={index} className="hover:shadow-md transition-shadow">
-                <CardContent className="p-6">
-                  <div className="flex items-center space-x-4">
-                    <div className={`p-2 rounded-lg bg-muted ${stat.color}`}>
-                      <Icon className="h-6 w-6" />
+                <CardContent className="p-3 sm:p-4 lg:p-6">
+                  <div className="flex flex-col sm:flex-row items-center sm:space-x-3 lg:space-x-4 space-y-2 sm:space-y-0">
+                    <div
+                      className={`p-2 rounded-lg bg-muted ${stat.color} flex-shrink-0`}
+                    >
+                      <Icon className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6" />
                     </div>
-                    <div>
-                      <div className="text-2xl font-bold">{stat.value}</div>
-                      <div className="text-sm text-muted-foreground">
+                    <div className="text-center sm:text-left">
+                      <div className="text-lg sm:text-xl lg:text-2xl font-bold">
+                        {stat.value}
+                      </div>
+                      <div className="text-xs sm:text-sm text-muted-foreground">
                         {stat.title}
                       </div>
                     </div>
                   </div>
-                  <p className="text-xs text-muted-foreground mt-2">
+                  <p className="text-xs text-muted-foreground mt-2 text-center sm:text-left">
                     {stat.description}
                   </p>
                 </CardContent>
@@ -226,23 +234,25 @@ export default function HomePage() {
         </section>
 
         {/* Featured Teams Section */}
-        <section className="space-y-6">
-          <div className="flex items-center justify-between">
+        <section className="space-y-4 sm:space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <div>
-              <h2 className="text-3xl font-bold">Premier League Teams</h2>
-              <p className="text-muted-foreground">
+              <h2 className="text-2xl sm:text-3xl font-bold">
+                Premier League Teams
+              </h2>
+              <p className="text-sm sm:text-base text-muted-foreground">
                 Discover all Premier League teams
               </p>
             </div>
-            <Link href="/teams">
-              <Button variant="outline" className="gap-2">
+            <Link href="/teams" className="self-start sm:self-auto">
+              <Button variant="outline" className="gap-2 text-sm">
                 View All Teams
                 <ArrowRight className="h-4 w-4" />
               </Button>
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-6">
             {teams.map((team) => (
               <TeamCard key={team.idTeam} team={team} variant="default" />
             ))}
@@ -250,15 +260,15 @@ export default function HomePage() {
         </section>
 
         {/* Matches Section */}
-        <section className="space-y-6">
+        <section className="space-y-4 sm:space-y-6">
           <div>
-            <h2 className="text-3xl font-bold">Latest Matches</h2>
-            <p className="text-muted-foreground">
+            <h2 className="text-2xl sm:text-3xl font-bold">Latest Matches</h2>
+            <p className="text-sm sm:text-base text-muted-foreground">
               Recent games and upcoming fixtures
             </p>
           </div>
 
-          <Tabs defaultValue="recent" className="space-y-6">
+          <Tabs defaultValue="recent" className="space-y-4 sm:space-y-6">
             <TabsContent value="recent" className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
                 {recentMatches.length > 0 ? (
@@ -320,17 +330,17 @@ export default function HomePage() {
         </section>
 
         {/* Previous Season Section */}
-        <section className="space-y-6">
+        <section className="space-y-4 sm:space-y-6">
           <div>
-            <h2 className="text-3xl font-bold">2024-2025 Season</h2>
-            <p className="text-muted-foreground">
+            <h2 className="text-2xl sm:text-3xl font-bold">2024-2025 Season</h2>
+            <p className="text-sm sm:text-base text-muted-foreground">
               Matches for the 2024-2025 season
             </p>
           </div>
 
-          <Tabs defaultValue="recent" className="space-y-6">
-            <TabsContent value="recent" className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+          <Tabs defaultValue="recent" className="space-y-4 sm:space-y-6">
+            <TabsContent value="recent" className="space-y-4 sm:space-y-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 lg:gap-6">
                 {previousSeasonMatches.length > 0 ? (
                   previousSeasonMatches.map((match) => (
                     <MatchCard
@@ -390,25 +400,31 @@ export default function HomePage() {
         </section>
 
         {/* Call to Action */}
-        <section className="text-center space-y-6 py-10">
-          <div className="space-y-4">
-            <h2 className="text-3xl font-bold">Ready to Dive Deeper?</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
+        <section className="text-center space-y-4 sm:space-y-6 py-6 sm:py-10">
+          <div className="space-y-3 sm:space-y-4 px-4">
+            <h2 className="text-2xl sm:text-3xl font-bold">
+              Ready to Dive Deeper?
+            </h2>
+            <p className="text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto">
               Explore detailed team information, comprehensive match schedules,
               and league standings.
             </p>
           </div>
 
-          <div className="flex flex-wrap justify-center gap-4">
-            <Link href="/standings">
-              <Button size="lg" variant="outline" className="gap-2">
-                <TrendingUp className="h-5 w-5" />
+          <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 px-4">
+            <Link href="/standings" className="w-full sm:w-auto">
+              <Button
+                size="default"
+                variant="outline"
+                className="gap-2 w-full sm:w-auto"
+              >
+                <TrendingUp className="h-4 w-4 sm:h-5 sm:w-5" />
                 View Standings
               </Button>
             </Link>
-            <Link href="/teams">
-              <Button size="lg" className="gap-2">
-                <Users className="h-5 w-5" />
+            <Link href="/teams" className="w-full sm:w-auto">
+              <Button size="default" className="gap-2 w-full sm:w-auto">
+                <Users className="h-4 w-4 sm:h-5 sm:w-5" />
                 Explore Teams
               </Button>
             </Link>

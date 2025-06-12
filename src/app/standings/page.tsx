@@ -152,11 +152,21 @@ export default function StandingsPage() {
 
   const getPositionBadge = (position: number) => {
     if (position <= 8) {
-      return <Badge className="bg-green-100 text-green-800">Playoffs</Badge>;
+      return (
+        <Badge className="bg-green-100 text-green-800 text-xs">Playoffs</Badge>
+      );
     } else if (position <= 10) {
-      return <Badge variant="secondary">Play-In</Badge>;
+      return (
+        <Badge variant="secondary" className="text-xs">
+          Play-In
+        </Badge>
+      );
     } else {
-      return <Badge variant="outline">Lottery</Badge>;
+      return (
+        <Badge variant="outline" className="text-xs">
+          Lottery
+        </Badge>
+      );
     }
   };
 
@@ -171,19 +181,19 @@ export default function StandingsPage() {
 
   if (isLoading) {
     return (
-      <div className="container mx-auto px-4 py-8 space-y-8">
+      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8 space-y-4 sm:space-y-8">
         {/* Header Skeleton */}
         <div className="space-y-4">
-          <Skeleton className="h-12 w-64" />
-          <Skeleton className="h-6 w-96" />
+          <Skeleton className="h-8 sm:h-12 w-48 sm:w-64" />
+          <Skeleton className="h-4 sm:h-6 w-64 sm:w-96" />
         </div>
 
         {/* Stats Skeleton */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
           {Array.from({ length: 4 }).map((_, i) => (
             <Card key={i}>
-              <CardContent className="p-4">
-                <Skeleton className="h-16 w-full" />
+              <CardContent className="p-3 sm:p-4">
+                <Skeleton className="h-12 sm:h-16 w-full" />
               </CardContent>
             </Card>
           ))}
@@ -191,13 +201,13 @@ export default function StandingsPage() {
 
         {/* Table Skeleton */}
         <Card>
-          <CardHeader>
-            <Skeleton className="h-6 w-32" />
+          <CardHeader className="pb-3 sm:pb-6">
+            <Skeleton className="h-5 sm:h-6 w-24 sm:w-32" />
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               {Array.from({ length: 10 }).map((_, i) => (
-                <Skeleton key={i} className="h-12 w-full" />
+                <Skeleton key={i} className="h-10 sm:h-12 w-full" />
               ))}
             </div>
           </CardContent>
@@ -207,47 +217,52 @@ export default function StandingsPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 space-y-8">
+    <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8 space-y-4 sm:space-y-8">
       {/* Header */}
       <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-4xl font-bold flex items-center gap-3">
-              <Trophy className="h-10 w-10 text-primary" />
-              Premier League Standings
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="min-w-0">
+            <h1 className="text-2xl sm:text-4xl font-bold flex items-center gap-2 sm:gap-3">
+              <Trophy className="h-6 w-6 sm:h-10 sm:w-10 text-primary flex-shrink-0" />
+              <span className="leading-tight">Premier League Standings</span>
             </h1>
-            <p className="text-muted-foreground text-lg">
+            <p className="text-sm sm:text-lg text-muted-foreground">
               Current season standings and team rankings
             </p>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
             {lastUpdated && (
-              <span className="text-sm text-muted-foreground">
+              <span className="text-xs sm:text-sm text-muted-foreground">
                 Updated: {lastUpdated.toLocaleTimeString()}
               </span>
             )}
-            <Button onClick={handleRefresh} variant="outline" className="gap-2">
+            <Button
+              onClick={handleRefresh}
+              variant="outline"
+              className="gap-2 text-sm sm:text-base h-8 sm:h-10"
+            >
               <RefreshCw className="h-4 w-4" />
-              Refresh
+              <span className="hidden sm:inline">Refresh</span>
+              <span className="sm:hidden">Update</span>
             </Button>
           </div>
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
           <Card>
-            <CardContent className="p-4">
-              <div className="flex items-center space-x-3">
-                <div className="p-2 rounded-lg bg-green-100 text-green-600">
-                  <Award className="h-5 w-5" />
+            <CardContent className="p-3 sm:p-4">
+              <div className="flex items-center space-x-2 sm:space-x-3">
+                <div className="p-1.5 sm:p-2 rounded-lg bg-green-100 text-green-600 flex-shrink-0">
+                  <Award className="h-4 w-4 sm:h-5 sm:w-5" />
                 </div>
-                <div>
-                  <div className="text-2xl font-bold">
+                <div className="min-w-0">
+                  <div className="text-lg sm:text-2xl font-bold truncate">
                     {standings.length > 0
                       ? standings[0]?.strTeam.split(" ").pop()
                       : "TBD"}
                   </div>
-                  <div className="text-sm text-muted-foreground">
+                  <div className="text-xs sm:text-sm text-muted-foreground">
                     League Leader
                   </div>
                 </div>
@@ -256,14 +271,14 @@ export default function StandingsPage() {
           </Card>
 
           <Card>
-            <CardContent className="p-4">
-              <div className="flex items-center space-x-3">
-                <div className="p-2 rounded-lg bg-blue-100 text-blue-600">
-                  <Users className="h-5 w-5" />
+            <CardContent className="p-3 sm:p-4">
+              <div className="flex items-center space-x-2 sm:space-x-3">
+                <div className="p-1.5 sm:p-2 rounded-lg bg-blue-100 text-blue-600 flex-shrink-0">
+                  <Users className="h-4 w-4 sm:h-5 sm:w-5" />
                 </div>
-                <div>
-                  <div className="text-2xl font-bold">16</div>
-                  <div className="text-sm text-muted-foreground">
+                <div className="min-w-0">
+                  <div className="text-lg sm:text-2xl font-bold">16</div>
+                  <div className="text-xs sm:text-sm text-muted-foreground">
                     Playoff Spots
                   </div>
                 </div>
@@ -272,32 +287,36 @@ export default function StandingsPage() {
           </Card>
 
           <Card>
-            <CardContent className="p-4">
-              <div className="flex items-center space-x-3">
-                <div className="p-2 rounded-lg bg-purple-100 text-purple-600">
-                  <Target className="h-5 w-5" />
+            <CardContent className="p-3 sm:p-4">
+              <div className="flex items-center space-x-2 sm:space-x-3">
+                <div className="p-1.5 sm:p-2 rounded-lg bg-purple-100 text-purple-600 flex-shrink-0">
+                  <Target className="h-4 w-4 sm:h-5 sm:w-5" />
                 </div>
-                <div>
-                  <div className="text-2xl font-bold">
+                <div className="min-w-0">
+                  <div className="text-lg sm:text-2xl font-bold">
                     {standings.length > 0
                       ? Math.max(...standings.map((s) => s.intWin))
                       : 0}
                   </div>
-                  <div className="text-sm text-muted-foreground">Most Wins</div>
+                  <div className="text-xs sm:text-sm text-muted-foreground">
+                    Most Wins
+                  </div>
                 </div>
               </div>
             </CardContent>
           </Card>
 
           <Card>
-            <CardContent className="p-4">
-              <div className="flex items-center space-x-3">
-                <div className="p-2 rounded-lg bg-orange-100 text-orange-600">
-                  <Trophy className="h-5 w-5" />
+            <CardContent className="p-3 sm:p-4">
+              <div className="flex items-center space-x-2 sm:space-x-3">
+                <div className="p-1.5 sm:p-2 rounded-lg bg-orange-100 text-orange-600 flex-shrink-0">
+                  <Trophy className="h-4 w-4 sm:h-5 sm:w-5" />
                 </div>
-                <div>
-                  <div className="text-2xl font-bold">2024-2025</div>
-                  <div className="text-sm text-muted-foreground">Season</div>
+                <div className="min-w-0">
+                  <div className="text-lg sm:text-2xl font-bold">2024-2025</div>
+                  <div className="text-xs sm:text-sm text-muted-foreground">
+                    Season
+                  </div>
                 </div>
               </div>
             </CardContent>
@@ -306,17 +325,84 @@ export default function StandingsPage() {
       </div>
 
       {/* Standings Table */}
-      <div className="space-y-8">
+      <div className="space-y-4 sm:space-y-8">
         {/* Full League Standings */}
         <Card>
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Trophy className="h-5 w-5" />
+            <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+              <Trophy className="h-4 w-4 sm:h-5 sm:w-5" />
               League Standings
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="overflow-x-auto">
+          <CardContent className="p-0 sm:p-6">
+            {/* Mobile View - Card Layout */}
+            <div className="block sm:hidden">
+              <div className="space-y-2">
+                {standings.map((team, index) => (
+                  <div
+                    key={team.idTeam}
+                    className="flex items-center justify-between p-3 border-b last:border-b-0 hover:bg-muted/50 transition-colors"
+                  >
+                    <div className="flex items-center space-x-3 min-w-0 flex-1">
+                      <div className="flex items-center gap-1 flex-shrink-0">
+                        <span className="text-sm font-medium w-6">
+                          {team.intRank}
+                        </span>
+                        {index < 3 && (
+                          <Trophy className="h-3 w-3 text-yellow-500" />
+                        )}
+                      </div>
+                      <Avatar className="h-8 w-8 flex-shrink-0">
+                        <AvatarImage src={team.strBadge} />
+                        <AvatarFallback className="text-xs">
+                          {team.strTeam.substring(0, 2).toUpperCase()}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="min-w-0 flex-1">
+                        <Link
+                          href={`/teams/${team.idTeam}`}
+                          className="hover:text-primary transition-colors"
+                        >
+                          <div className="font-medium text-sm truncate">
+                            {team.strTeam}
+                          </div>
+                        </Link>
+                        <div className="flex items-center space-x-2 text-xs text-muted-foreground">
+                          <span className="text-green-600 font-semibold">
+                            {team.intWin}W
+                          </span>
+                          <span className="text-red-600 font-semibold">
+                            {team.intLoss}L
+                          </span>
+                          <span className="font-mono">
+                            {calculateWinPercentage(
+                              team.intWin,
+                              team.intPlayed,
+                            )}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex flex-col items-end gap-1 flex-shrink-0">
+                      {getPositionBadge(team.intRank)}
+                      <div className="flex items-center space-x-1">
+                        {team.strForm
+                          ?.split("")
+                          .slice(0, 3)
+                          .map((result, i) => (
+                            <div key={i} className="flex items-center">
+                              {getFormIcon(result)}
+                            </div>
+                          ))}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Desktop View - Table Layout */}
+            <div className="hidden sm:block overflow-x-auto">
               <Table>
                 <TableHeader>
                   <TableRow>
@@ -388,106 +474,102 @@ export default function StandingsPage() {
         </Card>
 
         {/* Conference Breakdown */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-8">
           {/* Eastern Conference */}
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <TrendingUp className="h-5 w-5 text-blue-600" />
+              <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+                <TrendingUp className="h-4 w-4 sm:h-5 sm:w-5 text-blue-600" />
                 Eastern Conference
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                {easternConference.slice(0, 15).map((team, index) => (
-                  <div
-                    key={team.idTeam}
-                    className="flex items-center justify-between p-3 rounded-lg border hover:bg-muted/50 transition-colors"
-                  >
-                    <div className="flex items-center space-x-3">
-                      <span className="text-sm font-medium w-6">
-                        {index + 1}
+            <CardContent className="space-y-2 sm:space-y-3">
+              {easternConference.slice(0, 15).map((team, index) => (
+                <div
+                  key={team.idTeam}
+                  className="flex items-center justify-between p-2 sm:p-3 rounded-lg border hover:bg-muted/50 transition-colors"
+                >
+                  <div className="flex items-center space-x-2 sm:space-x-3 min-w-0 flex-1">
+                    <span className="text-xs sm:text-sm font-medium w-4 sm:w-6 flex-shrink-0">
+                      {index + 1}
+                    </span>
+                    <Avatar className="h-5 w-5 sm:h-6 sm:w-6 flex-shrink-0">
+                      <AvatarImage src={team.strBadge} />
+                      <AvatarFallback className="text-xs">
+                        {team.strTeam.substring(0, 2).toUpperCase()}
+                      </AvatarFallback>
+                    </Avatar>
+                    <Link
+                      href={`/teams/${team.idTeam}`}
+                      className="hover:text-primary transition-colors min-w-0 flex-1"
+                    >
+                      <span className="font-medium text-xs sm:text-sm truncate block">
+                        {team.strTeam}
                       </span>
-                      <Avatar className="h-6 w-6">
-                        <AvatarImage src={team.strBadge} />
-                        <AvatarFallback className="text-xs">
-                          {team.strTeam.substring(0, 2).toUpperCase()}
-                        </AvatarFallback>
-                      </Avatar>
-                      <Link
-                        href={`/teams/${team.idTeam}`}
-                        className="hover:text-primary transition-colors"
-                      >
-                        <span className="font-medium text-sm">
-                          {team.strTeam}
-                        </span>
-                      </Link>
-                    </div>
-                    <div className="flex items-center space-x-4 text-sm">
-                      <span className="text-green-600 font-semibold">
-                        {team.intWin}
-                      </span>
-                      <span className="text-red-600 font-semibold">
-                        {team.intLoss}
-                      </span>
-                      <span className="font-mono">
-                        {calculateWinPercentage(team.intWin, team.intPlayed)}
-                      </span>
-                    </div>
+                    </Link>
                   </div>
-                ))}
-              </div>
+                  <div className="flex items-center space-x-2 sm:space-x-4 text-xs sm:text-sm flex-shrink-0">
+                    <span className="text-green-600 font-semibold">
+                      {team.intWin}
+                    </span>
+                    <span className="text-red-600 font-semibold">
+                      {team.intLoss}
+                    </span>
+                    <span className="font-mono hidden sm:inline">
+                      {calculateWinPercentage(team.intWin, team.intPlayed)}
+                    </span>
+                  </div>
+                </div>
+              ))}
             </CardContent>
           </Card>
 
           {/* Western Conference */}
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <TrendingUp className="h-5 w-5 text-red-600" />
+              <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+                <TrendingUp className="h-4 w-4 sm:h-5 sm:w-5 text-red-600" />
                 Western Conference
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                {westernConference.slice(0, 15).map((team, index) => (
-                  <div
-                    key={team.idTeam}
-                    className="flex items-center justify-between p-3 rounded-lg border hover:bg-muted/50 transition-colors"
-                  >
-                    <div className="flex items-center space-x-3">
-                      <span className="text-sm font-medium w-6">
-                        {index + 1}
+            <CardContent className="space-y-2 sm:space-y-3">
+              {westernConference.slice(0, 15).map((team, index) => (
+                <div
+                  key={team.idTeam}
+                  className="flex items-center justify-between p-2 sm:p-3 rounded-lg border hover:bg-muted/50 transition-colors"
+                >
+                  <div className="flex items-center space-x-2 sm:space-x-3 min-w-0 flex-1">
+                    <span className="text-xs sm:text-sm font-medium w-4 sm:w-6 flex-shrink-0">
+                      {index + 1}
+                    </span>
+                    <Avatar className="h-5 w-5 sm:h-6 sm:w-6 flex-shrink-0">
+                      <AvatarImage src={team.strBadge} />
+                      <AvatarFallback className="text-xs">
+                        {team.strTeam.substring(0, 2).toUpperCase()}
+                      </AvatarFallback>
+                    </Avatar>
+                    <Link
+                      href={`/teams/${team.idTeam}`}
+                      className="hover:text-primary transition-colors min-w-0 flex-1"
+                    >
+                      <span className="font-medium text-xs sm:text-sm truncate block">
+                        {team.strTeam}
                       </span>
-                      <Avatar className="h-6 w-6">
-                        <AvatarImage src={team.strBadge} />
-                        <AvatarFallback className="text-xs">
-                          {team.strTeam.substring(0, 2).toUpperCase()}
-                        </AvatarFallback>
-                      </Avatar>
-                      <Link
-                        href={`/teams/${team.idTeam}`}
-                        className="hover:text-primary transition-colors"
-                      >
-                        <span className="font-medium text-sm">
-                          {team.strTeam}
-                        </span>
-                      </Link>
-                    </div>
-                    <div className="flex items-center space-x-4 text-sm">
-                      <span className="text-green-600 font-semibold">
-                        {team.intWin}
-                      </span>
-                      <span className="text-red-600 font-semibold">
-                        {team.intLoss}
-                      </span>
-                      <span className="font-mono">
-                        {calculateWinPercentage(team.intWin, team.intPlayed)}
-                      </span>
-                    </div>
+                    </Link>
                   </div>
-                ))}
-              </div>
+                  <div className="flex items-center space-x-2 sm:space-x-4 text-xs sm:text-sm flex-shrink-0">
+                    <span className="text-green-600 font-semibold">
+                      {team.intWin}
+                    </span>
+                    <span className="text-red-600 font-semibold">
+                      {team.intLoss}
+                    </span>
+                    <span className="font-mono hidden sm:inline">
+                      {calculateWinPercentage(team.intWin, team.intPlayed)}
+                    </span>
+                  </div>
+                </div>
+              ))}
             </CardContent>
           </Card>
         </div>
@@ -495,28 +577,34 @@ export default function StandingsPage() {
         {/* Legend */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">Legend</CardTitle>
+            <CardTitle className="text-base sm:text-lg">Legend</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 text-xs sm:text-sm">
               <div className="flex items-center space-x-2">
-                <Badge className="bg-green-100 text-green-800">Playoffs</Badge>
+                <Badge className="bg-green-100 text-green-800 text-xs">
+                  Playoffs
+                </Badge>
                 <span>Positions 1-8: Guaranteed playoff spot</span>
               </div>
               <div className="flex items-center space-x-2">
-                <Badge variant="secondary">Play-In</Badge>
+                <Badge variant="secondary" className="text-xs">
+                  Play-In
+                </Badge>
                 <span>Positions 9-10: Play-in tournament</span>
               </div>
               <div className="flex items-center space-x-2">
-                <Badge variant="outline">Lottery</Badge>
+                <Badge variant="outline" className="text-xs">
+                  Lottery
+                </Badge>
                 <span>Positions 11+: Draft lottery</span>
               </div>
             </div>
-            <div className="mt-4 flex items-center space-x-6 text-sm text-muted-foreground">
+            <div className="mt-3 sm:mt-4 flex flex-wrap items-center gap-4 sm:gap-6 text-xs sm:text-sm text-muted-foreground">
               <span>W = Wins</span>
               <span>L = Losses</span>
-              <span>PCT = Win Percentage</span>
-              <span>PTS = Points</span>
+              <span className="hidden sm:inline">PCT = Win Percentage</span>
+              <span className="hidden sm:inline">PTS = Points</span>
             </div>
           </CardContent>
         </Card>

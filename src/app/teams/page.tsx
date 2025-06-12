@@ -143,20 +143,23 @@ export default function TeamsPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 space-y-8">
+    <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8 space-y-4 sm:space-y-8">
       {/* Header */}
-      <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-4xl font-bold flex items-center gap-3">
-              <Users className="h-10 w-10 text-primary" />
-              Premier League Teams
+      <div className="space-y-3 sm:space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <div className="min-w-0">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold flex items-center gap-2 sm:gap-3">
+              <Users className="h-6 w-6 sm:h-8 sm:w-8 lg:h-10 lg:w-10 text-primary flex-shrink-0" />
+              <span className="truncate">Premier League Teams</span>
             </h1>
-            <p className="text-muted-foreground text-lg">
+            <p className="text-muted-foreground text-sm sm:text-base lg:text-lg">
               Explore all {teams.length} Premier League teams
             </p>
           </div>
-          <Badge variant="secondary" className="text-lg px-4 py-2">
+          <Badge
+            variant="secondary"
+            className="text-sm sm:text-base lg:text-lg px-3 py-1 sm:px-4 sm:py-2 self-start sm:self-auto"
+          >
             {filteredTeams.length} Teams
           </Badge>
         </div>
@@ -164,59 +167,62 @@ export default function TeamsPage() {
 
       {/* Filter and Search Controls */}
       <Card>
-        <CardContent className="p-6">
-          <div className="flex flex-col lg:flex-row gap-4">
+        <CardContent className="p-3 sm:p-4 lg:p-6">
+          <div className="flex flex-col gap-3 sm:gap-4">
             {/* Search */}
-            <div className="flex-1 relative">
+            <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder="Search teams by name, city, or abbreviation..."
+                placeholder="Search teams..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10"
+                className="pl-10 text-sm"
               />
             </div>
 
-            {/* Sort By */}
-            <Select value={sortBy} onValueChange={setSortBy}>
-              <SelectTrigger className="w-48">
-                <SelectValue placeholder="Sort by" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="name">Name (A-Z)</SelectItem>
-                <SelectItem value="founded">Year Founded</SelectItem>
-              </SelectContent>
-            </Select>
+            {/* Controls Row */}
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+              {/* Sort By */}
+              <Select value={sortBy} onValueChange={setSortBy}>
+                <SelectTrigger className="w-full sm:w-auto sm:min-w-[140px]">
+                  <SelectValue placeholder="Sort by" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="name">Name (A-Z)</SelectItem>
+                  <SelectItem value="founded">Year Founded</SelectItem>
+                </SelectContent>
+              </Select>
 
-            {/* Filter By */}
-            <Select value={filterBy} onValueChange={setFilterBy}>
-              <SelectTrigger className="w-48">
-                <SelectValue placeholder="Filter by" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Teams</SelectItem>
-                <SelectItem value="favorites">Favorites Only</SelectItem>
-              </SelectContent>
-            </Select>
+              {/* Filter By */}
+              <Select value={filterBy} onValueChange={setFilterBy}>
+                <SelectTrigger className="w-full sm:w-auto sm:min-w-[140px]">
+                  <SelectValue placeholder="Filter by" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Teams</SelectItem>
+                  <SelectItem value="favorites">Favorites Only</SelectItem>
+                </SelectContent>
+              </Select>
 
-            {/* View Mode Toggle */}
-            <div className="flex border rounded-lg">
-              <Button
-                variant={viewMode === "grid" ? "default" : "ghost"}
-                size="sm"
-                onClick={() => setViewMode("grid")}
-                className="rounded-r-none"
-              >
-                <Grid3X3 className="h-4 w-4" />
-              </Button>
-              <Button
-                variant={viewMode === "list" ? "default" : "ghost"}
-                size="sm"
-                onClick={() => setViewMode("list")}
-                className="rounded-l-none"
-              >
-                <List className="h-4 w-4" />
-              </Button>
+              {/* View Mode Toggle */}
+              <div className="flex border rounded-lg self-start sm:self-auto">
+                <Button
+                  variant={viewMode === "grid" ? "default" : "ghost"}
+                  size="sm"
+                  onClick={() => setViewMode("grid")}
+                  className="rounded-r-none px-3"
+                >
+                  <Grid3X3 className="h-4 w-4" />
+                </Button>
+                <Button
+                  variant={viewMode === "list" ? "default" : "ghost"}
+                  size="sm"
+                  onClick={() => setViewMode("list")}
+                  className="rounded-l-none px-3"
+                >
+                  <List className="h-4 w-4" />
+                </Button>
+              </div>
             </div>
           </div>
         </CardContent>
@@ -251,8 +257,8 @@ export default function TeamsPage() {
         <div
           className={
             viewMode === "grid"
-              ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-              : "space-y-4"
+              ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 lg:gap-6"
+              : "space-y-2 sm:space-y-4"
           }
         >
           {filteredTeams.map((team) => (
@@ -268,8 +274,8 @@ export default function TeamsPage() {
 
       {/* Load More Button for Large Datasets */}
       {filteredTeams.length > 20 && (
-        <div className="text-center">
-          <Button variant="outline" size="lg">
+        <div className="text-center pt-4">
+          <Button variant="outline" size="default" className="w-full sm:w-auto">
             Load More Teams
           </Button>
         </div>
