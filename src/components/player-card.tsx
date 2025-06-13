@@ -129,12 +129,6 @@ const PlayerCard: React.FC<PlayerCardProps> = ({
                     {player.strPosition}
                   </Badge>
                 )}
-                {player.strNationality && (
-                  <div className="flex items-center gap-1 text-xs text-slate-400">
-                    <Flag className="h-3 w-3" />
-                    <span className="truncate">{player.strNationality}</span>
-                  </div>
-                )}
               </div>
             </div>
           </div>
